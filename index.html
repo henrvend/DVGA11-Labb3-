@@ -16,14 +16,32 @@
 <body class="container">
     <div class="startMenu menu">
         <form action="#">
-            <div class="btn btn-primary menuBtn mt-4">Lägg Beställning</div><br>
-            <div class="btn btn-primary menuBtn my-4">Hitta Beställning</div><br>
-            <div class="btn btn-primary menuBtn">Meny</div>
+            <div class="btn btn-primary menuBtn mt-4" id="tableSelect">Välj bord</div><br>
+            <h2 class="tableNR d-none"></h2>
+            <div class="btn btn-primary menuBtn mt-4" id="foodSelect">Mat</div><br>
+            <div class="food1-item"></div>
+            <div class="food2-item"></div>
+            <div class="food3-item"></div>
+            <div class="btn btn-primary menuBtn mt-4" id="sauceSelect">Sås</div><br>
+            <div class="sauce-item"></div>
+            <div class="btn btn-primary menuBtn mt-4" id="drinkSelect">Dryck</div><br>
+            <div class="drink-item"></div>
         </form>
     </div>
-   
+    <div class="recieptList">
+        <ol>
 
-
+        </ol>
+    </div>
+    <div class="sumList">
+        <p>
+            
+        </p>
+    </div>
+    <div class="d-flex justify-content-between fixed-bottom footer">
+        <div class="reciept btn btn-primary">KVITTO</div>
+        <div class="sum btn btn-primary ">SUM</div>
+    </div>
 
 </body>
 

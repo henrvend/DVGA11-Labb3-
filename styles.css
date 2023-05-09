@@ -3,3 +3,16 @@
     width: 100%;
 }
 
+.sum{
+    width: 45%;
+    margin: 5px;
+}
+.reciept{
+    width: 45%;
+    margin: 5px;
+}
+
+.footer{
+    background-color: rgb(224, 238, 251);
+
+}

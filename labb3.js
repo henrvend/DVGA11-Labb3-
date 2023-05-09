@@ -1,4 +1,4 @@
-var menu = {
+const menu = {
 	"Pizzor klass 1": [
 		{"name": "Margherita", "contents": ["Tomatsås", "Ost"], "price": 65 },
 		{"name": "Vesuvio", "contents": ["Tomatsås", "Ost", "Skinka"], "price": 65 },
