@@ -3,12 +3,14 @@
 console.log('hello there');
 
 window.addEventListener('load', function () {
+    let sum = 0;
     bord();
-    food();
-    sauce();
-    drink();
+    food(sum);
+    sauce(sum);
+    drink(sum);
     showSum();
     showReciept();
+    
 });
 
 function bord() {
@@ -23,36 +25,37 @@ function bord() {
     });
 
 }
-function food() {
+function food(sum) {
     let tableBtn = document.querySelector('#foodSelect');
     tableBtn.addEventListener('click', () => {
-        fillList('food1-item', 'Pizzor klass 1');
-        fillList('food2-item', 'Pizzor klass 2');
-        fillList('food3-item', 'Pizzor klass 3');
+        fillList('food1-item', 'Pizzor klass 1', sum);
+        fillList('food2-item', 'Pizzor klass 2', sum);
+        fillList('food3-item', 'Pizzor klass 3',);
     });
 }
 
-function sauce() {
+function sauce(sum) {
     let tableBtn = document.querySelector('#sauceSelect');
     tableBtn.addEventListener('click', () => {
-        fillList('sauce-item', 'Såser');
+        fillList('sauce-item', 'Såser', sum);
     });
 
 }
-function drink() {
+function drink(sum) {
     let tableBtn = document.querySelector('#drinkSelect');
     tableBtn.addEventListener('click', () => {
-        fillList('drink-item', 'Dryck');
+        fillList('drink-item', 'Dryck', sum);
     });
 
 }
 
 
-function fillList(listType, name) {
+function fillList(listType, name, sum) {
     //skapar ett div-element där allt innehåll i menyn ska ligga
     let headDiv = document.createElement('div');
     let footer = document.querySelector('.footer');
-    let sum = document.querySelector('.sumList'); 
+    let price = document.querySelector('.sumList'); 
+    
     footer.classList.toggle('fixed-bottom');
 
 
@@ -74,8 +77,8 @@ function fillList(listType, name) {
                     div.append(btn);
                     headDiv.append(div);
                     btn.addEventListener('click', ()=>{
-                        console.log('clicked');
-                        sum.append(menuItem['price']);
+                        sum+=parseInt(menuItem['price']);
+                        price.innerHTML='Summa: '+sum+':-';
                         console.log(sum)
                     });
                 }
