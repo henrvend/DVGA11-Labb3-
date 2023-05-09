@@ -30,7 +30,7 @@ function food(sum) {
     tableBtn.addEventListener('click', () => {
         fillList('food1-item', 'Pizzor klass 1', sum);
         fillList('food2-item', 'Pizzor klass 2', sum);
-        fillList('food3-item', 'Pizzor klass 3',);
+        fillList('food3-item', 'Pizzor klass 3', sum);
     });
 }
 
@@ -68,12 +68,21 @@ function fillList(listType, name, sum) {
                 headDiv.append(header);
 
                 for (const menuItem of menuSection) {
+                    
+                    
                     let div = document.createElement('div');
                     let btn = document.createElement('div');
                     div.setAttribute('class', 'd-flex justify-content-between m-2 border-bottom');
                     btn.setAttribute('class', 'btn btn-primary m-1 py-0');
                     btn.append('+')
                     div.append(menuItem['name']);
+                    for(let i =0; i<menuItem['contents']?.length; i++){
+                        if(menuItem['contents'][i].includes('a:')){
+                            console.log(menuItem['contents'][i]);
+                            div.append(menuItem['contents'][i])
+                        }
+                        
+                    }
                     div.append(btn);
                     headDiv.append(div);
                     btn.addEventListener('click', ()=>{
