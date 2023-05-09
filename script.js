@@ -7,6 +7,8 @@ window.addEventListener('load', function () {
     food();
     sauce();
     drink();
+    showSum();
+    showReciept();
 });
 
 function bord() {
@@ -50,7 +52,7 @@ function fillList(listType, name) {
     //skapar ett div-element där allt innehåll i menyn ska ligga
     let headDiv = document.createElement('div');
     let footer = document.querySelector('.footer');
-    let sum = document.querySelector('.sumList p'); 
+    let sum = document.querySelector('.sumList'); 
     footer.classList.toggle('fixed-bottom');
 
 
@@ -83,4 +85,22 @@ function fillList(listType, name) {
     }else{
         document.querySelector('.'+listType).removeChild(document.querySelector('.'+listType).firstChild);
     }
+}
+
+function showSum(){
+    let sumBtn = document.querySelector('.sum');
+    let sumDiv = document.querySelector('.sumList');
+    sumBtn.addEventListener('click', ()=>{
+        sumDiv.classList.toggle('d-none');
+        
+    });
+}
+
+function showReciept(){
+    let recBtn = document.querySelector('.reciept');
+    let recDiv = document.querySelector('.recieptList');
+    recBtn.addEventListener('click', ()=>{
+        recDiv.classList.toggle('d-none');
+        
+    });
 }
