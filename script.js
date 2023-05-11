@@ -1,118 +1,261 @@
 'use strict'
 
 console.log('hello there');
-
 window.addEventListener('load', function () {
-    let sum = 0;
+
     bord();
-    food(sum);
-    sauce(sum);
-    drink(sum);
+    food();
+    sauce();
+    drink();
+    moidify();
     showSum();
     showReciept();
-    
+
 });
+
+let globalObject = {
+    total: 0
+}
 
 function bord() {
     let tableBtn = document.querySelector('#tableSelect');
+    let bordNr = document.querySelector('.bordsNummer');
+    let table = document.querySelector('#bord');
+    let h2 = document.querySelector('.tableNR');
+    let changeBtn = document.querySelector('#changeSelect');
+    let tableSelect = document.querySelector('#bord');
+
+    bordNr.setAttribute('class', 'd-flex w-100 justify-content-around mt-4 d-none')
+    bordNr.append(changeBtn);
+
+    for (let i = 0; i < 20; i++) {
+        let option = document.createElement('option');
+        option.value = i + 1;
+        option.append(i + 1)
+        tableSelect.append(option);
+    }
+
     tableBtn.addEventListener('click', () => {
-        let table = '';
-        console.log('Hello table');
-        let h2 = document.querySelector('.tableNR');
-        h2.textContent = 'Bord ' + table;
+
+        let x = table.options[table.selectedIndex].text;
+
+        h2.textContent = 'Bord ' + x;
+        bordNr.classList.toggle('d-none');
         h2.classList.toggle('d-none');
         tableBtn.classList.toggle('d-none');
+        changeBtn.classList.toggle('d-none');
+        table.classList.toggle('d-none');
+
+    });
+
+    changeBtn.addEventListener('click', () => {
+        tableBtn.classList.toggle('d-none');
+        changeBtn.classList.toggle('d-none');
+        table.classList.toggle('d-none');
+        h2.classList.toggle('d-none');
+        bordNr.classList.toggle('d-none');
     });
 
 }
-function food(sum) {
+
+
+function food() {
     let tableBtn = document.querySelector('#foodSelect');
     tableBtn.addEventListener('click', () => {
-        fillList('food1-item', 'Pizzor klass 1', sum);
-        fillList('food2-item', 'Pizzor klass 2', sum);
-        fillList('food3-item', 'Pizzor klass 3', sum);
+        fillList('food1-item', 'Pizzor klass 1');
+        fillList('food2-item', 'Pizzor klass 2');
+        fillList('food3-item', 'Pizzor klass 3');
     });
 }
 
-function sauce(sum) {
+function sauce() {
     let tableBtn = document.querySelector('#sauceSelect');
     tableBtn.addEventListener('click', () => {
-        fillList('sauce-item', 'Såser', sum);
+        fillList('sauce-item', 'Såser');
     });
 
 }
-function drink(sum) {
+function drink() {
     let tableBtn = document.querySelector('#drinkSelect');
     tableBtn.addEventListener('click', () => {
-        fillList('drink-item', 'Dryck', sum);
+        fillList('drink-item', 'Dryck');
     });
 
 }
 
 
-function fillList(listType, name, sum) {
+function fillList(listType, name) {
     //skapar ett div-element där allt innehåll i menyn ska ligga
     let headDiv = document.createElement('div');
-    let footer = document.querySelector('.footer');
-    let price = document.querySelector('.sumList'); 
-    
-    footer.classList.toggle('fixed-bottom');
-
+    let olRec = document.querySelector('.recieptList ol');
+    let olSum = document.querySelector('.sumList ol');
 
     //kollar om diven till listtypen som skickas in är tom eller inte
-    if (document.querySelector('.'+listType).firstChild == null) {
+    if (document.querySelector('.' + listType).firstChild == null) {
+
         for (const [menuName, menuSection] of Object.entries(menu)) {
+
             if (menuName == name) {
                 let header = document.createElement('h1');
+
                 header.append(menuName);
                 headDiv.append(header);
 
+
+                //loopar igenom alla 
                 for (const menuItem of menuSection) {
-                    
-                    
+
                     let div = document.createElement('div');
+                    let div2 = document.createElement('div');
                     let btn = document.createElement('div');
-                    div.setAttribute('class', 'd-flex justify-content-between m-2 border-bottom');
+                    let addBtn = document.createElement('div');
+                    let remBtn = document.createElement('div');
+
+                    div2.setAttribute('class', 'allergi');
+                    div.setAttribute('class', 'd-flex justify-content-between m-2 border-bottom h6');
                     btn.setAttribute('class', 'btn btn-primary m-1 py-0');
+                    addBtn.setAttribute('class', 'btn m-1 py-0 d-none success');
+                    remBtn.setAttribute('class', 'btn m-1 py-0 d-none alert');
+
                     btn.append('+')
-                    div.append(menuItem['name']);
-                    for(let i =0; i<menuItem['contents']?.length; i++){
-                        if(menuItem['contents'][i].includes('a:')){
-                            console.log(menuItem['contents'][i]);
-                            div.append(menuItem['contents'][i])
+                    addBtn.append('Ja');
+                    remBtn.append('Nej');
+                    div.append(menuItem['name'] + ' ' + menuItem['price'] + 'kr');
+
+                    let contentDiv = document.createElement('div');
+                    contentDiv.setAttribute('class', 's-text d-flex');
+                    let span = document.createElement('span');
+
+                    for (let i = 0; i < menuItem['contents']?.length; i++) {
+
+                        span.append(menuItem['contents'][i] + ' ');
+                        contentDiv.append(span);
+
+                        if (menuItem['contents'][i].includes('a:')) {
+                            let x = menuItem['contents'][i].replace(/a:/, ' *');
+                            div2.append(x);
                         }
-                        
+
                     }
-                    div.append(btn);
+
+                    div.append(contentDiv);
+                    div2.append(btn);
+                    div.append(div2);
                     headDiv.append(div);
-                    btn.addEventListener('click', ()=>{
-                        sum+=parseInt(menuItem['price']);
-                        price.innerHTML='Summa: '+sum+':-';
-                        console.log(sum)
+
+                    btn.addEventListener('click', () => {
+                        div2.append(remBtn);
+                        div2.append(addBtn);
+                        addBtn.classList.toggle('d-none');
+                        remBtn.classList.toggle('d-none');
+                        btn.classList.toggle('d-none');
+
+                    });
+
+                    addBtn.addEventListener('click', () => {
+                        let sum = parseInt(menuItem['price']);
+                        let olRecDiv = document.createElement('div');
+                        globalObject.total += sum;
+                        console.log(globalObject.total);
+                        addBtn.classList.toggle('d-none');
+                        remBtn.classList.toggle('d-none');
+                        btn.classList.toggle('d-none');
+                        olRecDiv.append(menuItem['name'] + ' ' + menuItem['price'] + ':-');
+                        olRec.append(olRecDiv);
+
+                        let sumDiv = document.querySelector('.sumList');
+                        if (!sumDiv.classList.contains('d-none')) {
+                            sumDiv.classList.toggle('d-none');
+                        }
+
+                        let recDiv = document.querySelector('.recieptList');
+                        if (!recDiv.classList.contains('d-none')) {
+                            recDiv.classList.toggle('d-none');
+                        }
+
+
+
+                    });
+                    remBtn.addEventListener('click', () => {
+                        addBtn.classList.toggle('d-none');
+                        remBtn.classList.toggle('d-none');
+                        btn.classList.toggle('d-none');
                     });
                 }
             }
-            document.querySelector('.'+listType).append(headDiv);
+
+            document.querySelector('.' + listType).append(headDiv);
         }
-    }else{
-        document.querySelector('.'+listType).removeChild(document.querySelector('.'+listType).firstChild);
+    } else {
+        document.querySelector('.' + listType).removeChild(document.querySelector('.' + listType).firstChild);
     }
 }
 
-function showSum(){
+function showSum() {
     let sumBtn = document.querySelector('.sum');
     let sumDiv = document.querySelector('.sumList');
-    sumBtn.addEventListener('click', ()=>{
+    let h4 = document.querySelector('.sumList > h4');
+    sumBtn.addEventListener('click', () => {
+
+        let recDiv = document.querySelector('.recieptList');
+        if (!recDiv.classList.contains('d-none')) {
+            recDiv.classList.toggle('d-none');
+        }
+
         sumDiv.classList.toggle('d-none');
         
+
     });
 }
 
-function showReciept(){
+function showReciept() {
     let recBtn = document.querySelector('.reciept');
     let recDiv = document.querySelector('.recieptList');
-    recBtn.addEventListener('click', ()=>{
+    let ol = document.querySelector('.recieptList ol');
+    let h4 = document.querySelector('.recieptList h4');
+    recBtn.addEventListener('click', () => {
+
+        let sumDiv = document.querySelector('.sumList');
+        if (!sumDiv.classList.contains('d-none')) {
+            sumDiv.classList.toggle('d-none');
+        }
+
         recDiv.classList.toggle('d-none');
-        
+        h4.innerHTML = 'Total summa: ' + globalObject.total + ':-';
+        ol.append(h4);
+
+    });
+
+}
+
+function show() {
+
+}
+
+function moidify() {
+    let modButton = document.querySelector('.specialSelect');
+    let textDiv = document.querySelector('.textDiv');
+    let specialBtnAdd = document.querySelector('.specialBtnAdd');
+    let modAdd = document.createElement('button');
+    let p = document.querySelector('.sumList p');
+
+    modAdd.setAttribute('class', 'btn btn-primary')
+    modAdd.append('Lägg till önskemål')
+    specialBtnAdd.append(modAdd);
+
+    modButton.addEventListener('click', () => {
+        textDiv.classList.toggle('d-none')
+    });
+
+    specialBtnAdd.addEventListener('click', () => {
+
+        let textArea = document.querySelector('textarea');
+        let p2 = document.createElement('p');
+        p2.setAttribute('class', 'm-0 p-0');
+        p2.append(textArea.value);
+        p.append(p2)
+        textArea.value = '';
+        textDiv.classList.toggle('d-none');
+
     });
 }
