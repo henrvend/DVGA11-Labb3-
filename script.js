@@ -9,12 +9,13 @@ window.addEventListener('load', function () {
     drink();
     moidify();
     showSum();
-    showReciept();
+    showOrder();
 
 });
 
 let globalObject = {
-    total: 0
+    total: 0,
+    table: ''
 }
 
 function bord() {
@@ -37,9 +38,9 @@ function bord() {
 
     tableBtn.addEventListener('click', () => {
 
-        let x = table.options[table.selectedIndex].text;
-
-        h2.textContent = 'Bord ' + x;
+        globalObject.table = table.options[table.selectedIndex].text;
+        console.log(globalObject.table);
+        h2.textContent = 'Bord ' + globalObject.table;
         bordNr.classList.toggle('d-none');
         h2.classList.toggle('d-none');
         tableBtn.classList.toggle('d-none');
@@ -155,13 +156,16 @@ function fillList(listType, name) {
                     addBtn.addEventListener('click', () => {
                         let sum = parseInt(menuItem['price']);
                         let olRecDiv = document.createElement('div');
+                        let olSumDiv = document.createElement('div');
                         globalObject.total += sum;
                         console.log(globalObject.total);
                         addBtn.classList.toggle('d-none');
                         remBtn.classList.toggle('d-none');
                         btn.classList.toggle('d-none');
                         olRecDiv.append(menuItem['name'] + ' ' + menuItem['price'] + ':-');
+                        olSumDiv.append(menuItem['name']);
                         olRec.append(olRecDiv);
+                        olSum.append(olSumDiv);
 
                         let sumDiv = document.querySelector('.sumList');
                         if (!sumDiv.classList.contains('d-none')) {
@@ -195,7 +199,21 @@ function showSum() {
     let sumBtn = document.querySelector('.sum');
     let sumDiv = document.querySelector('.sumList');
     let h4 = document.querySelector('.sumList > h4');
+    let h3 = document.querySelector('.sumList h3');
+    let table = document.querySelector('#bord');
+
     sumBtn.addEventListener('click', () => {
+
+        
+        let x = table.options[table.selectedIndex].text;
+        h3.innerHTML=('Order Bord '+x);
+        let body = document.querySelector('form');
+
+        if(!body.classList.contains('d-none')&&sumDiv.classList.contains('d-none')){
+            body.classList.toggle('d-none');
+        }else if(body.classList.contains('d-none')&&!sumDiv.classList.contains('d-none')){
+            body.classList.toggle('d-none');
+        }
 
         let recDiv = document.querySelector('.recieptList');
         if (!recDiv.classList.contains('d-none')) {
@@ -206,16 +224,31 @@ function showSum() {
         
 
     });
+    
 }
 
-function showReciept() {
+function showOrder() {
     let recBtn = document.querySelector('.reciept');
     let recDiv = document.querySelector('.recieptList');
     let ol = document.querySelector('.recieptList ol');
     let h4 = document.querySelector('.recieptList h4');
+    let h3 = document.querySelector('.recieptList h3');
+    let table = document.querySelector('#bord');
+    
+
     recBtn.addEventListener('click', () => {
 
+        let body = document.querySelector('form');
+        let x = table.options[table.selectedIndex].text;
+        h3.innerHTML=('Kvitto Bord '+x);
+        
+        if(!body.classList.contains('d-none')&&recDiv.classList.contains('d-none')){
+            body.classList.toggle('d-none');
+        }else if(body.classList.contains('d-none')&&!recDiv.classList.contains('d-none')){
+            body.classList.toggle('d-none');
+        }
         let sumDiv = document.querySelector('.sumList');
+
         if (!sumDiv.classList.contains('d-none')) {
             sumDiv.classList.toggle('d-none');
         }
@@ -228,9 +261,6 @@ function showReciept() {
 
 }
 
-function show() {
-
-}
 
 function moidify() {
     let modButton = document.querySelector('.specialSelect');
