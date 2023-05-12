@@ -103,7 +103,7 @@ function fillList(listType, name) {
                 headDiv.append(header);
 
 
-                //loopar igenom alla 
+                //loopar igenom alla element i menyn
                 for (const menuItem of menuSection) {
 
                     let div = document.createElement('div');
@@ -114,20 +114,22 @@ function fillList(listType, name) {
 
                     div2.setAttribute('class', 'allergi');
                     div.setAttribute('class', 'd-flex justify-content-between m-2 border-bottom h6');
-                    btn.setAttribute('class', 'btn btn-primary m-1 py-0');
+                    btn.setAttribute('class', 'btn btn-primary m-1 py-0 px-3');
                     addBtn.setAttribute('class', 'btn m-1 py-0 d-none success');
                     remBtn.setAttribute('class', 'btn m-1 py-0 d-none alert');
+                    
 
                     btn.append('+')
                     addBtn.append('Ja');
                     remBtn.append('Nej');
+                    
                     div.append(menuItem['name'] + ' ' + menuItem['price'] + 'kr');
 
                     let contentDiv = document.createElement('div');
                     contentDiv.setAttribute('class', 's-text d-flex');
                     let span = document.createElement('span');
 
-                    for (let i = 0; i < menuItem['contents']?.length; i++) {
+                    /*for (let i = 0; i < menuItem['contents']?.length; i++) {
 
                         span.append(menuItem['contents'][i] + ' ');
                         contentDiv.append(span);
@@ -137,7 +139,7 @@ function fillList(listType, name) {
                             div2.append(x);
                         }
 
-                    }
+                    }*/
 
                     div.append(contentDiv);
                     div2.append(btn);
@@ -154,18 +156,35 @@ function fillList(listType, name) {
                     });
 
                     addBtn.addEventListener('click', () => {
+                        let sumRemBtn = document.createElement('div');
+                        sumRemBtn.setAttribute('class', 'btn btn-primary py-0 m-1 px-3');
+                        sumRemBtn.append('-');
                         let sum = parseInt(menuItem['price']);
                         let olRecDiv = document.createElement('div');
                         let olSumDiv = document.createElement('div');
                         globalObject.total += sum;
                         console.log(globalObject.total);
+                        olSumDiv.setAttribute('class',  'd-flex justify-content-between');
                         addBtn.classList.toggle('d-none');
                         remBtn.classList.toggle('d-none');
                         btn.classList.toggle('d-none');
                         olRecDiv.append(menuItem['name'] + ' ' + menuItem['price'] + ':-');
                         olSumDiv.append(menuItem['name']);
-                        olRec.append(olRecDiv);
+                        olSumDiv.append(sumRemBtn)
+                        olRec.append(olRecDiv); 
                         olSum.append(olSumDiv);
+                    
+
+
+                        sumRemBtn.addEventListener('click', ()=>{
+                            
+                            olRecDiv.remove(menuItem['name']);
+                            olSumDiv.remove(menuItem['name']);
+                            globalObject.total-=menuItem['price'];
+                            
+
+                            console.log('Testing');
+                        });
 
                         let sumDiv = document.querySelector('.sumList');
                         if (!sumDiv.classList.contains('d-none')) {
@@ -176,6 +195,7 @@ function fillList(listType, name) {
                         if (!recDiv.classList.contains('d-none')) {
                             recDiv.classList.toggle('d-none');
                         }
+
 
 
 
@@ -268,7 +288,7 @@ function moidify() {
     let specialBtnAdd = document.querySelector('.specialBtnAdd');
     let modAdd = document.createElement('button');
     let p = document.querySelector('.sumList p');
-
+    let textArea = document.querySelector('textarea');
     modAdd.setAttribute('class', 'btn btn-primary')
     modAdd.append('Lägg till önskemål')
     specialBtnAdd.append(modAdd);
@@ -277,9 +297,9 @@ function moidify() {
         textDiv.classList.toggle('d-none')
     });
 
-    specialBtnAdd.addEventListener('click', () => {
-
-        let textArea = document.querySelector('textarea');
+    specialBtnAdd.addEventListener('click', (event) => {
+        event.preventDefault();
+        
         let p2 = document.createElement('p');
         p2.setAttribute('class', 'm-0 p-0');
         p2.append(textArea.value);
