@@ -117,12 +117,12 @@ function fillList(listType, name) {
                     btn.setAttribute('class', 'btn btn-primary m-1 py-0 px-3');
                     addBtn.setAttribute('class', 'btn m-1 py-0 d-none success');
                     remBtn.setAttribute('class', 'btn m-1 py-0 d-none alert');
-                    
+
 
                     btn.append('+')
                     addBtn.append('Ja');
                     remBtn.append('Nej');
-                    
+
                     div.append(menuItem['name'] + ' ' + menuItem['price'] + 'kr');
 
                     let contentDiv = document.createElement('div');
@@ -164,27 +164,49 @@ function fillList(listType, name) {
                         let olSumDiv = document.createElement('div');
                         globalObject.total += sum;
                         console.log(globalObject.total);
-                        olSumDiv.setAttribute('class',  'd-flex justify-content-between');
+                        olSumDiv.setAttribute('class', 'd-flex justify-content-between');
                         addBtn.classList.toggle('d-none');
                         remBtn.classList.toggle('d-none');
                         btn.classList.toggle('d-none');
                         olRecDiv.append(menuItem['name'] + ' ' + menuItem['price'] + ':-');
                         olSumDiv.append(menuItem['name']);
                         olSumDiv.append(sumRemBtn)
-                        olRec.append(olRecDiv); 
+                        olRec.append(olRecDiv);
                         olSum.append(olSumDiv);
-                    
+
+                        let remSumBtn = document.createElement('div');
+                        let keepSumBtn = document.createElement('div');
+
+                        remSumBtn.setAttribute('class', 'btn m-1 py-0 d-none alert');
+                        keepSumBtn.setAttribute('class', 'btn m-1 py-0 d-none success');
+                        remSumBtn.append('Ta Bort');
+                        keepSumBtn.append('Behåll');
+
+                        olSumDiv.append(keepSumBtn);
+                        olSumDiv.append(remSumBtn);
+
+                        sumRemBtn.addEventListener('click', () => {
+
+                            sumRemBtn.classList.toggle('d-none');
+                            remSumBtn.classList.toggle('d-none');
+                            keepSumBtn.classList.toggle('d-none');
 
 
-                        sumRemBtn.addEventListener('click', ()=>{
-                            
+                        });
+                        
+                        remSumBtn.addEventListener('click', () => {
                             olRecDiv.remove(menuItem['name']);
                             olSumDiv.remove(menuItem['name']);
-                            globalObject.total-=menuItem['price'];
-                            
+                            globalObject.total -= menuItem['price'];
 
-                            console.log('Testing');
                         });
+
+                        keepSumBtn.addEventListener('click', () => {
+                            sumRemBtn.classList.toggle('d-none');
+                            remSumBtn.classList.toggle('d-none');
+                            keepSumBtn.classList.toggle('d-none');
+                        });
+
 
                         let sumDiv = document.querySelector('.sumList');
                         if (!sumDiv.classList.contains('d-none')) {
@@ -224,14 +246,14 @@ function showSum() {
 
     sumBtn.addEventListener('click', () => {
 
-        
+
         let x = table.options[table.selectedIndex].text;
-        h3.innerHTML=('Order Bord '+x);
+        h3.innerHTML = ('Order Bord ' + x);
         let body = document.querySelector('form');
 
-        if(!body.classList.contains('d-none')&&sumDiv.classList.contains('d-none')){
+        if (!body.classList.contains('d-none') && sumDiv.classList.contains('d-none')) {
             body.classList.toggle('d-none');
-        }else if(body.classList.contains('d-none')&&!sumDiv.classList.contains('d-none')){
+        } else if (body.classList.contains('d-none') && !sumDiv.classList.contains('d-none')) {
             body.classList.toggle('d-none');
         }
 
@@ -241,10 +263,10 @@ function showSum() {
         }
 
         sumDiv.classList.toggle('d-none');
-        
+
 
     });
-    
+
 }
 
 function showOrder() {
@@ -254,17 +276,17 @@ function showOrder() {
     let h4 = document.querySelector('.recieptList h4');
     let h3 = document.querySelector('.recieptList h3');
     let table = document.querySelector('#bord');
-    
+
 
     recBtn.addEventListener('click', () => {
 
         let body = document.querySelector('form');
         let x = table.options[table.selectedIndex].text;
-        h3.innerHTML=('Kvitto Bord '+x);
-        
-        if(!body.classList.contains('d-none')&&recDiv.classList.contains('d-none')){
+        h3.innerHTML = ('Kvitto Bord ' + x);
+
+        if (!body.classList.contains('d-none') && recDiv.classList.contains('d-none')) {
             body.classList.toggle('d-none');
-        }else if(body.classList.contains('d-none')&&!recDiv.classList.contains('d-none')){
+        } else if (body.classList.contains('d-none') && !recDiv.classList.contains('d-none')) {
             body.classList.toggle('d-none');
         }
         let sumDiv = document.querySelector('.sumList');
@@ -299,7 +321,7 @@ function moidify() {
 
     specialBtnAdd.addEventListener('click', (event) => {
         event.preventDefault();
-        
+
         let p2 = document.createElement('p');
         p2.setAttribute('class', 'm-0 p-0');
         p2.append(textArea.value);
