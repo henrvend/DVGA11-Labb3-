@@ -56,3 +56,7 @@ textarea{
     background: rgb(255, 255, 255);
     background: linear-gradient(90deg, rgb(234, 144, 144) 0%, rgb(255, 132, 132) 35%, rgb(249, 6, 6) 100%);
 }
+
+body{
+    max-width: 450px;
+}
