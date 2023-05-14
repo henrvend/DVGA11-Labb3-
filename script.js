@@ -129,17 +129,17 @@ function fillList(listType, name) {
                     contentDiv.setAttribute('class', 's-text d-flex');
                     let span = document.createElement('span');
 
-                    /*for (let i = 0; i < menuItem['contents']?.length; i++) {
+                    for (let i = 0; i < menuItem['contents']?.length; i++) {
 
-                        span.append(menuItem['contents'][i] + ' ');
-                        contentDiv.append(span);
+                       /* span.append(menuItem['contents'][i] + ' ');
+                        contentDiv.append(span);*/
 
                         if (menuItem['contents'][i].includes('a:')) {
                             let x = menuItem['contents'][i].replace(/a:/, ' *');
                             div2.append(x);
                         }
 
-                    }*/
+                    }
 
                     div.append(contentDiv);
                     div2.append(btn);
@@ -240,7 +240,6 @@ function fillList(listType, name) {
 function showSum() {
     let sumBtn = document.querySelector('.sum');
     let sumDiv = document.querySelector('.sumList');
-    let h4 = document.querySelector('.sumList > h4');
     let h3 = document.querySelector('.sumList h3');
     let table = document.querySelector('#bord');
 
