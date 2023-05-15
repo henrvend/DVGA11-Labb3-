@@ -66,19 +66,20 @@ function food() {
         fillList('food1-item', 'Pizzor klass 1');
         fillList('food2-item', 'Pizzor klass 2');
         fillList('food3-item', 'Pizzor klass 3');
+
     });
 }
 
 function sauce() {
-    let tableBtn = document.querySelector('#sauceSelect');
-    tableBtn.addEventListener('click', () => {
+    let sauceBtn = document.querySelector('#sauceSelect');
+    sauceBtn.addEventListener('click', () => {
         fillList('sauce-item', 'Såser');
     });
 
 }
 function drink() {
-    let tableBtn = document.querySelector('#drinkSelect');
-    tableBtn.addEventListener('click', () => {
+    let drinkBtn = document.querySelector('#drinkSelect');
+    drinkBtn.addEventListener('click', () => {
         fillList('drink-item', 'Dryck');
     });
 
@@ -87,9 +88,13 @@ function drink() {
 
 function fillList(listType, name) {
     //skapar ett div-element där allt innehåll i menyn ska ligga
+    
     let headDiv = document.createElement('div');
+
+
     let olRec = document.querySelector('.recieptList ol');
     let olSum = document.querySelector('.sumList ol');
+
 
     //kollar om diven till listtypen som skickas in är tom eller inte
     if (document.querySelector('.' + listType).firstChild == null) {
@@ -131,8 +136,8 @@ function fillList(listType, name) {
 
                     for (let i = 0; i < menuItem['contents']?.length; i++) {
 
-                       /* span.append(menuItem['contents'][i] + ' ');
-                        contentDiv.append(span);*/
+                        /* span.append(menuItem['contents'][i] + ' ');
+                         contentDiv.append(span);*/
 
                         if (menuItem['contents'][i].includes('a:')) {
                             let x = menuItem['contents'][i].replace(/a:/, ' *');
@@ -193,7 +198,7 @@ function fillList(listType, name) {
 
 
                         });
-                        
+
                         remSumBtn.addEventListener('click', () => {
                             olRecDiv.remove(menuItem['name']);
                             olSumDiv.remove(menuItem['name']);
@@ -235,6 +240,7 @@ function fillList(listType, name) {
     } else {
         document.querySelector('.' + listType).removeChild(document.querySelector('.' + listType).firstChild);
     }
+    
 }
 
 function showSum() {
@@ -265,7 +271,7 @@ function showSum() {
 
 
     });
-
+    
 }
 
 function showOrder() {
